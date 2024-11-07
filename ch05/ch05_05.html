@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="watchModule">
+<head>
+  <meta charset="UTF-8">
+  <title>ch05_05</title>
+  <script src="../angular.js"></script>
+  <script src="controller.js"></script>
+
+</head>
+<body>
+<input ng-model='name' type='text'/>
+<div>change count: {{count}}</div>
+<script>
+  //run方法在AngularJS应用启动时执行一次，不会在之后再次调用. 注入全局作用域对象$rootScope, 再执行回调函数
+  angular.module('watchModule',[])
+          .run(['$rootScope',function($rootScope){
+            $rootScope.count = 0;
+            $rootScope.name = '江荣波';
+            //利用watch方法对$rootScope中的name属性进行监视
+            $rootScope.$watch('name',function(){
+              $rootScope.count++;
+            })
+          }]);
+</script>
+</body>
+</html>
+

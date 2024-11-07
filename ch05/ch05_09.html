@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app="watchModule">
+<head>
+  <meta charset="UTF-8">
+  <title>ch05_09</title>
+  <script src="../angular.js"></script>
+  </script>
+</head>
+<body>
+<input ng-model='num' type='number'/>
+<div>change count: {{count}}</div>
+<script>
+  angular.module('watchModule',[])
+          .run(['$rootScope',function($rootScope){
+            $rootScope.count = 0;
+            $rootScope.num = 100;
+            //watch方法的返回值是另一个方法，该方法就是用于解除监视的方法
+            var unbindWatcher= $rootScope
+                    .$watch('num',function(newValue,oldVaule){
+                      if(newValue == 2){
+                        unbindWatcher(); //解除作用域监视
+                      }
+                      $rootScope.count++;
+
+                    })
+          }]);
+</script>
+</body>
+</html>
+
+

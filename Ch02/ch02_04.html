@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>ch01_3</title>
+  <script src="../angular.js"></script>
+
+</head>
+<body>
+
+  <div>用户名: <input type="text" ng-model="uname"></div>
+<!--  作用域到视图的单项绑定，ng-bind指令在AngularJS没有加载完毕时是不会解析的-->
+  <div ng-bind="uname"></div>
+  </body>
+</html>
+

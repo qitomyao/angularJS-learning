@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app="msgModule">
+<head>
+  <meta charset="UTF-8">
+  <title>ch05_12</title>
+  <script src="../angular.js"></script>
+</head>
+<body>
+<div ng-controller="MsgController">
+  <div>
+    <button ng-click="scheduleTask()">3秒后回显信息
+    </button>
+  </div><br/><br/>
+  <div>
+    {{message}}
+  </div>
+</div>
+<script>
+  angular.module('msgModule',[]).controller('MsgController',
+          function($scope,$timeout) {
+            $scope.scheduleTask = function() {
+              //$timeout会触发$digest循环，不再需要去手动调用$apply来实现数据绑定
+              $timeout(function() {
+                $scope.message = '信息内容';
+                console.log('message='+$scope.message);
+              }, 3000);
+            }
+          });
+</script>
+</body>
+</html>
+

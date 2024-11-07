@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ch05_04</title>
+</head>
+<body>
+<script type="text/javascript">
+  function Person(name,age){
+    this.name = name;
+    this.age = age;
+  }
+
+  var person = new Person('jane',28);
+  var student = Object.create(person); //以一个对象为原型创建另外一个对象，创建的对象和原对象具有相同的属性
+  student.love = "pingpong";
+  console.log(Object.getPrototypeOf(student));//获取新对象student的原型
+  console.log("student.name=>"+student.name);
+  console.log("student.age=>"+student.age);
+  console.log("student.love=>"+student.love);
+
+</script>
+</body>
+</html>
+
+

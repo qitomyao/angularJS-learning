@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ch05_01</title>
+    <script src="../angular.js"></script>
+    <script src="controller.js"></script>
+
+
+</head>
+<body>
+<div ng-app="app" ng-init="name='jane'; age = 23;"> <!--根作用域-->
+    <div ng-controller="FirstController" >
+        <div ng-controller="SecondController" >
+            <p>Name: {{name}}</p>
+            <p>Age: {{age}}</p>
+            <button ng-click="display()">点我</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

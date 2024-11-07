@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--np-app = "app" 的作用是指定AngularJS应用程序的名称并将其绑定到DOM元素中，="app"的具体作用是将页面绑定到名为"app"的AngularJS模块-->
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-controller="CalcController as calc">
+    <div>单价: <input type="number" ng-model="price"></div>
+    <div>数量: <input type="number" ng-model="num"></div>
+    <div>总价: {{calc.totalPrice()}}</div>
+    <script type="text/javascript">
+      // 定义 AngularJS 模块，名字为app，第二个参数代表是否有依赖其他模块
+      var app = angular.module("app", []);
+
+      // 定义控制器函数，$scope是AngularJS提供的一个对象，用于在控制器和视图之前共享数据
+      function CalcController($scope) {
+        $scope.price = 10; //对象属性和文本框绑定
+        $scope.num = 1; //对象属性和文本框绑定
+        this.totalPrice = function() { //this指当前的控制器
+          return $scope.price * $scope.num;
+        };
+      }
+
+      // 将控制器注册到模块中
+      app.controller("CalcController", CalcController);
+    </script>
+</body>
+</html>
+
+
+
