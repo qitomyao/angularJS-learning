@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ch12_09</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <script src="/angular-1.5.5/angular.js"></script>
+    <script src="/angular-1.5.5/angular-animate.js"></script>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background-color: #ccc;
+        }
+        /*当元素进入DOM时，AngularJS会为它添加ng-enter样式*/
+        .box.ng-enter{
+            transition: 0.5s linear all;
+            width: 0px;
+            height: 0px;
+        }
+        /*当元素加载完毕后，AngularJS会为它添加ng-enter-acive样式*/
+        .box.ng-enter-active{
+            width: 200px;
+            height: 200px;
+        }
+        /*当AngularJS检测到元素将被移除时，在移除之前会为该元素添加ne-leave样式*/
+        .box.ng-leave{
+            transition: 0.5s linear all;
+            width: 200px;
+            height:200px;
+        }
+        /*在ne-leave之后，添加ne-leave-active样式*/
+        .box.ng-leave-active{
+            width: 0px;
+            height:0px;
+        }
+    </style>
+</head>
+<body ng-controller="MainController">
+<div class="box" ng-if="isShow"></div><br/>
+<div>
+    <button class="btn" ng-click="isShow=true">显示</button>&nbsp;
+    <button class="btn" ng-click="isShow=false">隐藏</button>
+</div>
+<script>
+    var myApp = angular.module('myApp',['ngAnimate']);
+    //使用ng-if指令控制它的显示隐藏，也就是控制<div class="box">进入或离开DOM
+    myApp.controller("MainController",function($scope){
+        $scope.isShow = false;
+    });
+</script>
+</body>
+</html>
+
+

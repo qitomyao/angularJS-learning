@@ -1,0 +1,23 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>ch10_01</title>
+  <script src="/angular-1.5.5/angular.js"></script>
+</head>
+<body>
+<div ng-controller="MainController">
+  {{amount}}
+</div>
+<script>
+  var app = angular.module('app',[]);
+  /*
+    在controller中使用AngularJS内置的currency过滤器，只需要将过滤器注入到控制器即可
+    这个例子使用currencyFilter过滤器将数字转换为金额
+   */
+  app.controller("MainController",function($scope,currencyFilter){
+    $scope.amount = currencyFilter(1000123);
+  });
+</script>
+</body>
+</html>

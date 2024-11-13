@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ch12_11</title>
+    <script src="/jquery/jquery-2.0.3.js"></script>
+    <script src="/angular-1.5.5/angular.js"></script>
+    <script src="/angular-1.5.5/angular-animate.js"></script>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: lightskyblue;
+            border: 1px solid #808080;
+        }
+    </style>
+    <script>
+        var app = angular.module("myApp", ["ngAnimate"])
+        app.controller("MainController", function ($scope){
+            $scope.isShow = false;
+        });
+        /*
+            在ng-if指令触发元素进入或离开DOM时，会触发enter和leave方法
+            animation方法
+            第一个参数: 用于指定CSS样式的名称
+            第二个参数: 一个匿名方法，用于执行动画效果，需要接受两个参数element和done
+                 element: 一个jqLite或jQuery对象
+                 done: 是一个方法，需要在动画代码执行后显示地去调一次done()方法
+         */
+        app.animation('.showBox', function() {
+            return {
+                //这里的element是元素<div class="box showBox"></div>
+                enter: function (element, done) {
+                    element.css('display', 'none');
+                    $(element).slideDown(2000, function () {
+                        done(); //这是一个回调函数，在AngularJS动画完成后必须调用它来通知AngualrJS动画过程结束
+                    });
+                },
+                leave: function (element, done) {
+                    $(element).fadeOut(2000, function () {
+                        done();
+                    });
+                }
+            }
+        })
+    </script>
+</head>
+<body ng-controller="MainController">
+<label>显示/隐藏正方形: <input type="checkbox" ng-model="isShow" /></label><br/>
+<br />
+<div class="box showBox" ng-if="isShow"></div>
+</div>
+</body>
+</html>
+
+

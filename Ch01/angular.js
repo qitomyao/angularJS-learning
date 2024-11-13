@@ -26,13 +26,13 @@
  * Since data will be parsed statically during a build step, some restrictions
  * are applied with respect to how minErr instances are created and called.
  * Instances should have names of the form namespaceMinErr for a minErr created
- * using minErr('namespace') . Error codes, namespaces and template strings
+ * using minErr('namespace') . Error codes, namespaces and templates strings
  * should all be static strings, not variables or general expressions.
  *
  * @param {string} module The namespace to use for the new minErr instance.
  * @param {function} ErrorConstructor Custom error constructor to be instantiated when returning
  *   error from returned function, for cases when a particular type of error is useful.
- * @returns {function(code:string, template:string, ...templateArgs): Error} minErr instance
+ * @returns {function(code:string, templates:string, ...templateArgs): Error} minErr instance
  */
 
 function minErr(module, ErrorConstructor) {
@@ -6536,32 +6536,32 @@ function $CacheFactoryProvider() {
  * @name $templateCache
  *
  * @description
- * The first time a template is used, it is loaded in the template cache for quick retrieval. You
+ * The first time a templates is used, it is loaded in the templates cache for quick retrieval. You
  * can load templates directly into the cache in a `script` tag, or by consuming the
  * `$templateCache` service directly.
  *
  * Adding via the `script` tag:
  *
  * ```html
- *   <script type="text/ng-template" id="templateId.html">
- *     <p>This is the content of the template</p>
+ *   <script type="text/ng-templates" id="templateId.html">
+ *     <p>This is the content of the templates</p>
  *   </script>
  * ```
  *
- * **Note:** the `script` tag containing the template does not need to be included in the `head` of
+ * **Note:** the `script` tag containing the templates does not need to be included in the `head` of
  * the document, but it must be a descendent of the {@link ng.$rootElement $rootElement} (IE,
- * element with ng-app attribute), otherwise the template will be ignored.
+ * element with ng-app attribute), otherwise the templates will be ignored.
  *
  * Adding via the `$templateCache` service:
  *
  * ```js
  * var myApp = angular.module('myApp', []);
  * myApp.run(function($templateCache) {
- *   $templateCache.put('templateId.html', 'This is the content of the template');
+ *   $templateCache.put('templateId.html', 'This is the content of the templates');
  * });
  * ```
  *
- * To retrieve the template later, simply use it in your HTML:
+ * To retrieve the templates later, simply use it in your HTML:
  * ```html
  * <div ng-include=" 'templateId.html' "></div>
  * ```
@@ -6615,8 +6615,8 @@ function $TemplateCacheProvider() {
  * @kind function
  *
  * @description
- * Compiles an HTML string or DOM into a template and produces a template function, which
- * can then be used to link {@link ng.$rootScope.Scope `scope`} and the template together.
+ * Compiles an HTML string or DOM into a templates and produces a templates function, which
+ * can then be used to link {@link ng.$rootScope.Scope `scope`} and the templates together.
  *
  * The compilation is a process of walking the DOM tree and matching DOM elements to
  * {@link ng.$compileProvider#directive directives}.
@@ -6647,7 +6647,7 @@ function $TemplateCacheProvider() {
  *   myModule.directive('directiveName', function factory(injectables) {
  *     var directiveDefinitionObject = {
  *       priority: 0,
- *       template: '<div></div>', // or // function(tElement, tAttrs) { ... },
+ *       templates: '<div></div>', // or // function(tElement, tAttrs) { ... },
  *       // or
  *       // templateUrl: 'directive.html', // or // function(tElement, tAttrs) { ... },
  *       transclude: false,
@@ -6723,7 +6723,7 @@ function $TemplateCacheProvider() {
  * If set to true then the current `priority` will be the last set of directives
  * which will execute (any directives at the current priority will still execute
  * as the order of execution on same `priority` is undefined). Note that expressions
- * and other directives used in the directive's template will also be excluded from execution.
+ * and other directives used in the directive's templates will also be excluded from execution.
  *
  * #### `scope`
  * The scope property can be `true`, an object or a falsy value:
@@ -6732,8 +6732,8 @@ function $TemplateCacheProvider() {
  *
  * * **`true`:** A new child scope that prototypically inherits from its parent will be created for
  * the directive's element. If multiple directives on the same element request a new scope,
- * only one new scope is created. The new scope rule does not apply for the root of the template
- * since the root of the template always gets a new scope.
+ * only one new scope is created. The new scope rule does not apply for the root of the templates
+ * since the root of the templates always gets a new scope.
  *
  * * **`{...}` (an object hash):** A new "isolate" scope is created for the directive's element. The
  * 'isolate' scope differs from normal scope in that it does not prototypically inherit from its parent
@@ -6887,7 +6887,7 @@ function $TemplateCacheProvider() {
  * * `$postLink()` - Called after this controller's element and its children have been linked. Similar to the post-link
  *   function this hook can be used to set up DOM event handlers and do direct DOM manipulation.
  *   Note that child elements that contain `templateUrl` directives will not have been compiled and linked since
- *   they are waiting for their template to load asynchronously and their own compilation and linking has been
+ *   they are waiting for their templates to load asynchronously and their own compilation and linking has been
  *   suspended until that occurs.
  *
  *
@@ -6922,7 +6922,7 @@ function $TemplateCacheProvider() {
  *
  * #### `controllerAs`
  * Identifier name for a reference to the controller in the directive's scope.
- * This allows the controller to be referenced from the directive template. This is especially
+ * This allows the controller to be referenced from the directive templates. This is especially
  * useful when a directive is used as component, i.e. with an `isolate` scope. It's also possible
  * to use it in a directive without an `isolate` / `new` scope, but you need to be aware that the
  * `controllerAs` reference might overwrite a property that already exists on the parent scope.
@@ -6939,18 +6939,18 @@ function $TemplateCacheProvider() {
  *
  *
  * #### `templateNamespace`
- * String representing the document type used by the markup in the template.
+ * String representing the document type used by the markup in the templates.
  * AngularJS needs this information as those elements need to be created and cloned
  * in a special way when they are defined outside their usual containers like `<svg>` and `<math>`.
  *
- * * `html` - All root nodes in the template are HTML. Root nodes may also be
+ * * `html` - All root nodes in the templates are HTML. Root nodes may also be
  *   top-level elements such as `<svg>` or `<math>`.
- * * `svg` - The root nodes in the template are SVG elements (excluding `<math>`).
- * * `math` - The root nodes in the template are MathML elements (excluding `<svg>`).
+ * * `svg` - The root nodes in the templates are SVG elements (excluding `<math>`).
+ * * `math` - The root nodes in the templates are MathML elements (excluding `<svg>`).
  *
  * If no `templateNamespace` is specified, then the namespace is considered to be `html`.
  *
- * #### `template`
+ * #### `templates`
  * HTML markup that may:
  * * Replace the contents of the directive's element (default).
  * * Replace the directive's element itself (if `replace` is true - DEPRECATED).
@@ -6964,32 +6964,32 @@ function $TemplateCacheProvider() {
  *
  *
  * #### `templateUrl`
- * This is similar to `template` but the template is loaded from the specified URL, asynchronously.
+ * This is similar to `templates` but the templates is loaded from the specified URL, asynchronously.
  *
- * Because template loading is asynchronous the compiler will suspend compilation of directives on that element
- * for later when the template has been resolved.  In the meantime it will continue to compile and link
+ * Because templates loading is asynchronous the compiler will suspend compilation of directives on that element
+ * for later when the templates has been resolved.  In the meantime it will continue to compile and link
  * sibling and parent elements as though this element had not contained any directives.
  *
  * The compiler does not suspend the entire compilation to wait for templates to be loaded because this
  * would result in the whole app "stalling" until all templates are loaded asynchronously - even in the
  * case when only one deeply nested directive has `templateUrl`.
  *
- * Template loading is asynchronous even if the template has been preloaded into the {@link $templateCache}
+ * Template loading is asynchronous even if the templates has been preloaded into the {@link $templateCache}
  *
  * You can specify `templateUrl` as a string representing the URL or as a function which takes two
  * arguments `tElement` and `tAttrs` (described in the `compile` function api below) and returns
- * a string value representing the url.  In either case, the template URL is passed through {@link
+ * a string value representing the url.  In either case, the templates URL is passed through {@link
  * $sce#getTrustedResourceUrl $sce.getTrustedResourceUrl}.
  *
  *
  * #### `replace` ([*DEPRECATED*!], will be removed in next major release - i.e. v2.0)
- * specify what the template should replace. Defaults to `false`.
+ * specify what the templates should replace. Defaults to `false`.
  *
- * * `true` - the template will replace the directive's element.
- * * `false` - the template will replace the contents of the directive's element.
+ * * `true` - the templates will replace the directive's element.
+ * * `false` - the templates will replace the contents of the directive's element.
  *
  * The replacement process migrates all of the attributes / classes from the old element to the new
- * one. See the {@link guide/directive#template-expanding-directive
+ * one. See the {@link guide/directive#templates-expanding-directive
  * Directives Guide} for an example.
  *
  * There are very few scenarios where element replacement is required for the application function,
@@ -7008,19 +7008,19 @@ function $TemplateCacheProvider() {
  *   function compile(tElement, tAttrs, transclude) { ... }
  * ```
  *
- * The compile function deals with transforming the template DOM. Since most directives do not do
- * template transformation, it is not used often. The compile function takes the following arguments:
+ * The compile function deals with transforming the templates DOM. Since most directives do not do
+ * templates transformation, it is not used often. The compile function takes the following arguments:
  *
- *   * `tElement` - template element - The element where the directive has been declared. It is
- *     safe to do template transformation on the element and child elements only.
+ *   * `tElement` - templates element - The element where the directive has been declared. It is
+ *     safe to do templates transformation on the element and child elements only.
  *
- *   * `tAttrs` - template attributes - Normalized list of attributes declared on this element shared
+ *   * `tAttrs` - templates attributes - Normalized list of attributes declared on this element shared
  *     between all directive compile functions.
  *
  *   * `transclude` -  [*DEPRECATED*!] A transclude linking function: `function(scope, cloneLinkingFn)`
  *
  * <div class="alert alert-warning">
- * **Note:** The template instance and the link instance may be different objects if the template has
+ * **Note:** The templates instance and the link instance may be different objects if the templates has
  * been cloned. For this reason it is **not** safe to do anything other than DOM transformations that
  * apply to all cloned DOM nodes within the compile function. Specifically, DOM listener registration
  * should be done in a linking function rather than in a compile function.
@@ -7032,7 +7032,7 @@ function $TemplateCacheProvider() {
  * stack overflow errors.
  *
  * This can be avoided by manually using $compile in the postLink function to imperatively compile
- * a directive's template instead of relying on automatic template compilation via `template` or
+ * a directive's templates instead of relying on automatic templates compilation via `templates` or
  * `templateUrl` declaration or manual compilation inside the compile function.
  * </div>
  *
@@ -7060,7 +7060,7 @@ function $TemplateCacheProvider() {
  * ```
  *
  * The link function is responsible for registering DOM listeners as well as updating the DOM. It is
- * executed after the template has been cloned. This is where most of the directive logic will be
+ * executed after the templates has been cloned. This is where most of the directive logic will be
  * put.
  *
  *   * `scope` - {@link ng.$rootScope.Scope Scope} - The scope to be used by the
@@ -7101,7 +7101,7 @@ function $TemplateCacheProvider() {
  * Executed after the child elements are linked.
  *
  * Note that child elements that contain `templateUrl` directives will not have been compiled
- * and linked since they are waiting for their template to load asynchronously and their own
+ * and linked since they are waiting for their templates to load asynchronously and their own
  * compilation and linking has been suspended until that occurs.
  *
  * It is safe to do DOM transformation in the post-linking function on elements that are not waiting
@@ -7115,13 +7115,13 @@ function $TemplateCacheProvider() {
  * scope from where they were taken.
  *
  * Transclusion is used (often with {@link ngTransclude}) to insert the
- * original contents of a directive's element into a specified place in the template of the directive.
+ * original contents of a directive's element into a specified place in the templates of the directive.
  * The benefit of transclusion, over simply moving the DOM elements manually, is that the transcluded
  * content has access to the properties on the scope from which it was taken, even if the directive
  * has isolated scope.
  * See the {@link guide/directive#creating-a-directive-that-wraps-other-elements Directives Guide}.
  *
- * This makes it possible for the widget to have private state for its template, while the transcluded
+ * This makes it possible for the widget to have private state for its templates, while the transcluded
  * content has access to its originating scope.
  *
  * <div class="alert alert-warning">
@@ -7135,9 +7135,9 @@ function $TemplateCacheProvider() {
  *
  * * `true` - transclude the content (i.e. the child nodes) of the directive's element.
  * * `'element'` - transclude the whole of the directive's element including any directives on this
- *   element that defined at a lower priority than this directive. When used, the `template`
+ *   element that defined at a lower priority than this directive. When used, the `templates`
  *   property is ignored.
- * * **`{...}` (an object hash):** - map elements of the content onto transclusion "slots" in the template.
+ * * **`{...}` (an object hash):** - map elements of the content onto transclusion "slots" in the templates.
  *
  * **Mult-slot transclusion** is declared by providing an object for the `transclude` property.
  *
@@ -7348,7 +7348,7 @@ function $TemplateCacheProvider() {
 
  *
  *
- * @param {string|DOMElement} element Element or HTML string to compile into a template function.
+ * @param {string|DOMElement} element Element or HTML string to compile into a templates function.
  * @param {function(angular.Scope, cloneAttachFn=)} transclude function available to directives - DEPRECATED.
  *
  * <div class="alert alert-danger">
@@ -7359,12 +7359,12 @@ function $TemplateCacheProvider() {
  *
  * @param {number} maxPriority only apply directives lower than given priority (Only effects the
  *                 root element(s), not their children)
- * @returns {function(scope, cloneAttachFn=, options=)} a link function which is used to bind template
+ * @returns {function(scope, cloneAttachFn=, options=)} a link function which is used to bind templates
  * (a DOM element/tree) to a scope. Where:
  *
  *  * `scope` - A {@link ng.$rootScope.Scope Scope} to bind to.
  *  * `cloneAttachFn` - If `cloneAttachFn` is provided, then the link function will clone the
- *  `template` and call the `cloneAttachFn` function allowing the caller to attach the
+ *  `templates` and call the `cloneAttachFn` function allowing the caller to attach the
  *  cloned elements to the DOM document at the appropriate place. The `cloneAttachFn` is
  *  called as: <br/> `cloneAttachFn(clonedElement, scope)` where:
  *
@@ -7391,7 +7391,7 @@ function $TemplateCacheProvider() {
  *        the cloned elements; only needed for transcludes that are allowed to contain non html
  *        elements (e.g. SVG elements). See also the directive.controller property.
  *
- * Calling the linking function returns the element of the template. It is either the original
+ * Calling the linking function returns the element of the templates. It is either the original
  * element passed in, or the clone of the element if the `cloneAttachFn` is provided.
  *
  * After linking the view is not updated until after a call to $digest which typically is done by
@@ -7399,14 +7399,14 @@ function $TemplateCacheProvider() {
  *
  * If you need access to the bound view, there are two ways to do it:
  *
- * - If you are not asking the linking function to clone the template, create the DOM element(s)
+ * - If you are not asking the linking function to clone the templates, create the DOM element(s)
  *   before you send them to the compiler and keep this reference around.
  *   ```js
  *     var element = $compile('<p>{{total}}</p>')(scope);
  *   ```
  *
  * - if on the other hand, you need the element to be cloned, the view reference from the original
- *   example would not point to the clone, but rather to the original template that was cloned. In
+ *   example would not point to the clone, but rather to the original templates that was cloned. In
  *   this case, you can access the clone via the cloneAttachFn:
  *   ```js
  *     var templateElement = angular.element('<p>{{total}}</p>'),
@@ -7603,18 +7603,18 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    *    - `controllerAs` – `{string=}` – identifier name for to reference the controller in the component's scope.
    *      If present, the controller will be published to scope under the `controllerAs` name.
    *      If not present, this will default to be `$ctrl`.
-   *    - `template` – `{string=|function()=}` – html template as a string or a function that
-   *      returns an html template as a string which should be used as the contents of this component.
+   *    - `templates` – `{string=|function()=}` – html templates as a string or a function that
+   *      returns an html templates as a string which should be used as the contents of this component.
    *      Empty string by default.
    *
-   *      If `template` is a function, then it is {@link auto.$injector#invoke injected} with
+   *      If `templates` is a function, then it is {@link auto.$injector#invoke injected} with
    *      the following locals:
    *
    *      - `$element` - Current element
    *      - `$attrs` - Current attributes object for the element
    *
    *    - `templateUrl` – `{string=|function()=}` – path or function that returns a path to an html
-   *      template that should be used  as the contents of this component.
+   *      templates that should be used  as the contents of this component.
    *
    *      If `templateUrl` is a function, then it is {@link auto.$injector#invoke injected} with
    *      the following locals:
@@ -7640,7 +7640,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * are always isolated (i.e. `scope: {}`) and are always restricted to elements (i.e. `restrict: 'E'`).
    *
    * Component definitions are very simple and do not require as much configuration as defining general
-   * directives. Component definitions usually consist only of a template and a controller backing it.
+   * directives. Component definitions usually consist only of a templates and a controller backing it.
    *
    * In order to make the definition easier, components enforce best practices like use of `controllerAs`,
    * `bindToController`. They always have **isolate scope** and are restricted to elements.
@@ -7650,14 +7650,14 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * ```js
    *   var myMod = angular.module(...);
    *   myMod.component('myComp', {
-   *     template: '<div>My name is {{$ctrl.name}}</div>',
+   *     templates: '<div>My name is {{$ctrl.name}}</div>',
    *     controller: function() {
    *       this.name = 'shahar';
    *     }
    *   });
    *
    *   myMod.component('myComp', {
-   *     template: '<div>My name is {{$ctrl.name}}</div>',
+   *     templates: '<div>My name is {{$ctrl.name}}</div>',
    *     bindings: {name: '@'}
    *   });
    *
@@ -8683,7 +8683,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         if (directiveValue = directive.scope) {
 
           // skip the check for directives with async templates, we'll check the derived sync
-          // directive when the template arrives
+          // directive when the templates arrives
           if (!directive.templateUrl) {
             if (isObject(directiveValue)) {
               // This directive is trying to add an isolated scope.
@@ -8872,17 +8872,17 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
             var newTemplateAttrs = {$attr: {}};
 
-            // combine directives from the original node and from the template:
+            // combine directives from the original node and from the templates:
             // - take the array of directives for this element
             // - split it into two parts, those that already applied (processed) and those that weren't (unprocessed)
-            // - collect directives from the template and sort them by priority
-            // - combine directives as: processed + template + unprocessed
+            // - collect directives from the templates and sort them by priority
+            // - combine directives as: processed + templates + unprocessed
             var templateDirectives = collectDirectives(compileNode, [], newTemplateAttrs);
             var unprocessedDirectives = directives.splice(i + 1, directives.length - (i + 1));
 
             if (newIsolateScopeDirective || newScopeDirective) {
               // The original directive caused the current element to be replaced but this element
-              // also needs to have a new scope, so we need to tell the template directives
+              // also needs to have a new scope, so we need to tell the templates directives
               // that they would need to get their scope from further up, if they require transclusion
               markDirectiveScope(templateDirectives, newIsolateScopeDirective, newScopeDirective);
             }
@@ -9079,7 +9079,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         }
 
         // RECURSION
-        // We only pass the isolate scope, if the isolate directive has a template,
+        // We only pass the isolate scope, if the isolate directive has a templates,
         // otherwise the child elements do not belong to the isolate directive.
         var scopeToChild = scope;
         if (newIsolateScopeDirective && (newIsolateScopeDirective.template || newIsolateScopeDirective.templateUrl === null)) {
@@ -9220,9 +9220,9 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
     // Depending upon the context in which a directive finds itself it might need to have a new isolated
     // or child scope created. For instance:
-    // * if the directive has been pulled into a template because another directive with a higher priority
+    // * if the directive has been pulled into a templates because another directive with a higher priority
     // asked for element transclusion
-    // * if the directive itself asks for transclusion but it is at the root of a template and the original
+    // * if the directive itself asks for transclusion but it is at the root of a templates and the original
     // element was replaced. See https://github.com/angular/angular.js/issues/12936
     function markDirectiveScope(directives, isolateScope, newScope) {
       for (var j = 0, jj = directives.length; j < jj; j++) {
@@ -9297,12 +9297,12 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
     }
 
     /**
-     * When the element is replaced with HTML template then the new attributes
-     * on the template need to be merged with the existing attributes in the DOM.
+     * When the element is replaced with HTML templates then the new attributes
+     * on the templates need to be merged with the existing attributes in the DOM.
      * The desired effect is to have both of the attributes present.
      *
      * @param {object} dst destination attributes (original DOM)
-     * @param {object} src source attributes (from the directive template)
+     * @param {object} src source attributes (from the directive templates)
      */
     function mergeTemplateAttributes(dst, src) {
       var srcAttr = src.$attr,
@@ -9380,7 +9380,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             var templateDirectives = collectDirectives(compileNode, [], tempTemplateAttrs);
 
             if (isObject(origAsyncDirective.scope)) {
-              // the original directive that caused the template to be loaded async required
+              // the original directive that caused the templates to be loaded async required
               // an isolate scope
               markDirectiveScope(templateDirectives, true);
             }
@@ -9489,7 +9489,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             var templateNodeParent = templateNode.parent(),
                 hasCompileParent = !!templateNodeParent.length;
 
-            // When transcluding a template that has bindings in the root
+            // When transcluding a templates that has bindings in the root
             // we don't have a parent and thus need to add the class during linking fn.
             if (hasCompileParent) compile.$$addBindingClass(templateNodeParent);
 
@@ -11839,9 +11839,9 @@ $interpolateMinErr.interr = function(text, err) {
  *
  * <div class="alert alert-danger">
  * This feature is sometimes used to mix different markup languages, e.g. to wrap an Angular
- * template within a Python Jinja template (or any other template language). Mixing templating
- * languages is **very dangerous**. The embedding template language will not safely escape Angular
- * expressions, so any user-controlled values in the template will cause Cross Site Scripting (XSS)
+ * templates within a Python Jinja templates (or any other templates language). Mixing templating
+ * languages is **very dangerous**. The embedding templates language will not safely escape Angular
+ * expressions, so any user-controlled values in the templates will cause Cross Site Scripting (XSS)
  * security bugs!
  * </div>
  *
@@ -12015,7 +12015,7 @@ function $InterpolateProvider() {
      * output when the $interpolate service processes the text. So, for HTML elements interpolated
      * by {@link ng.$compile $compile}, or otherwise interpolated with the `mustHaveExpression` parameter
      * set to `true`, the interpolated text must contain an unescaped interpolation expression. As such,
-     * this is typically useful only when user-data is used in rendering a template from the server, or
+     * this is typically useful only when user-data is used in rendering a templates from the server, or
      * when otherwise untrusted data is used by a directive.
      *
      * <example>
@@ -16402,7 +16402,7 @@ function $RootScopeProvider() {
      * A root scope can be retrieved using the {@link ng.$rootScope $rootScope} key from the
      * {@link auto.$injector $injector}. Child scopes are created using the
      * {@link ng.$rootScope.Scope#$new $new()} method. (Most scopes are created automatically when
-     * compiled HTML template is executed.) See also the {@link guide/scope Scopes guide} for
+     * compiled HTML templates is executed.) See also the {@link guide/scope Scopes guide} for
      * an in-depth introduction and usage examples.
      *
      *
@@ -18212,7 +18212,7 @@ function $SceDelegateProvider() {
  *
  * By default, Angular only loads templates from the same domain and protocol as the application
  * document.  This is done by calling {@link ng.$sce#getTrustedResourceUrl
- * $sce.getTrustedResourceUrl} on the template URL.  To load templates from other domains and/or
+ * $sce.getTrustedResourceUrl} on the templates URL.  To load templates from other domains and/or
  * protocols, you may either {@link ng.$sceDelegateProvider#resourceUrlWhitelist whitelist
  * them} or {@link ng.$sce#trustAsResourceUrl wrap it} into a trusted value.
  *
@@ -18220,7 +18220,7 @@ function $SceDelegateProvider() {
  * The browser's
  * [Same Origin Policy](https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
  * and [Cross-Origin Resource Sharing (CORS)](http://www.w3.org/TR/cors/)
- * policy apply in addition to this and may further restrict whether the template is successfully
+ * policy apply in addition to this and may further restrict whether the templates is successfully
  * loaded.  This means that without the right CORS policy, loading templates from a different domain
  * won't work on all browsers.  Also, loading templates from `file://` URL does not work on some
  * browsers.
@@ -18885,10 +18885,10 @@ var $templateRequestMinErr = minErr('$compile');
  * @ngdoc provider
  * @name $templateRequestProvider
  * @description
- * Used to configure the options passed to the {@link $http} service when making a template request.
+ * Used to configure the options passed to the {@link $http} service when making a templates request.
  *
  * For example, it can be used for specifying the "Accept" header that is sent to the server, when
- * requesting a template.
+ * requesting a templates.
  */
 function $TemplateRequestProvider() {
 
@@ -18899,7 +18899,7 @@ function $TemplateRequestProvider() {
    * @name $templateRequestProvider#httpOptions
    * @description
    * The options to be passed to the {@link $http} service when making the request.
-   * You can use this to override options such as the "Accept" header for template requests.
+   * You can use this to override options such as the "Accept" header for templates requests.
    *
    * The {@link $templateRequest} will set the `cache` and the `transformResponse` properties of the
    * options if not overridden here.
@@ -18920,7 +18920,7 @@ function $TemplateRequestProvider() {
    * @name $templateRequest
    *
    * @description
-   * The `$templateRequest` service runs security checks then downloads the provided template using
+   * The `$templateRequest` service runs security checks then downloads the provided templates using
    * `$http` and, upon success, stores the contents inside of `$templateCache`. If the HTTP request
    * fails or the response data of the HTTP request is empty, a `$compile` error will be thrown (the
    * exception can be thwarted by setting the 2nd parameter of the function to true). Note that the
@@ -18930,19 +18930,19 @@ function $TemplateRequestProvider() {
    * If you want to pass custom options to the `$http` service, such as setting the Accept header you
    * can configure this via {@link $templateRequestProvider#httpOptions}.
    *
-   * @param {string|TrustedResourceUrl} tpl The HTTP request template URL
-   * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the request fails or the template is empty
+   * @param {string|TrustedResourceUrl} tpl The HTTP request templates URL
+   * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the request fails or the templates is empty
    *
    * @return {Promise} a promise for the HTTP response data of the given URL.
    *
-   * @property {number} totalPendingRequests total amount of pending template requests being downloaded.
+   * @property {number} totalPendingRequests total amount of pending templates requests being downloaded.
    */
   this.$get = ['$templateCache', '$http', '$q', '$sce', function($templateCache, $http, $q, $sce) {
 
     function handleRequestFn(tpl, ignoreRequestError) {
       handleRequestFn.totalPendingRequests++;
 
-      // We consider the template cache holds only trusted templates, so
+      // We consider the templates cache holds only trusted templates, so
       // there's no need to go through whitelisting again for keys that already
       // are included in there. This also makes Angular accept any script
       // directive, no matter its name. However, we still need to unwrap trusted
@@ -18975,7 +18975,7 @@ function $TemplateRequestProvider() {
 
       function handleError(resp) {
         if (!ignoreRequestError) {
-          throw $templateRequestMinErr('tpload', 'Failed to load template: {0} (HTTP status: {1} {2})',
+          throw $templateRequestMinErr('tpload', 'Failed to load templates: {0} (HTTP status: {1} {2})',
             tpl, resp.status, resp.statusText);
         }
         return $q.reject(resp);
@@ -23788,7 +23788,7 @@ var ngValueDirective = function() {
  * Typically, you don't use `ngBind` directly, but instead you use the double curly markup like
  * `{{ expression }}` which is similar but less verbose.
  *
- * It is preferable to use `ngBind` instead of `{{ expression }}` if a template is momentarily
+ * It is preferable to use `ngBind` instead of `{{ expression }}` if a templates is momentarily
  * displayed by the browser in its raw state before Angular compiles it. Since `ngBind` is an
  * element attribute, it makes the bindings invisible to the user while the page is loading.
  *
@@ -23849,14 +23849,14 @@ var ngBindDirective = ['$compile', function($compile) {
  *
  * @description
  * The `ngBindTemplate` directive specifies that the element
- * text content should be replaced with the interpolation of the template
+ * text content should be replaced with the interpolation of the templates
  * in the `ngBindTemplate` attribute.
  * Unlike `ngBind`, the `ngBindTemplate` can contain multiple `{{` `}}`
  * expressions. This directive is needed since some HTML elements
  * (such as TITLE and OPTION) cannot contain SPAN elements.
  *
  * @element ANY
- * @param {string} ngBindTemplate template of form
+ * @param {string} ngBindTemplate templates of form
  *   <tt>{{</tt> <tt>expression</tt> <tt>}}</tt> to eval.
  *
  * @example
@@ -23873,7 +23873,7 @@ var ngBindDirective = ['$compile', function($compile) {
        <div ng-controller="ExampleController">
         <label>Salutation: <input type="text" ng-model="salutation"></label><br>
         <label>Name: <input type="text" ng-model="name"></label><br>
-        <pre ng-bind-template="{{salutation}} {{name}}!"></pre>
+        <pre ng-bind-templates="{{salutation}} {{name}}!"></pre>
        </div>
      </file>
      <file name="protractor.js" type="protractor">
@@ -24463,9 +24463,9 @@ var ngClassEvenDirective = classDirective('Even', 1);
  * @restrict AC
  *
  * @description
- * The `ngCloak` directive is used to prevent the Angular html template from being briefly
+ * The `ngCloak` directive is used to prevent the Angular html templates from being briefly
  * displayed by the browser in its raw (uncompiled) form while your application is loading. Use this
- * directive to avoid the undesirable flicker effect caused by the html template display.
+ * directive to avoid the undesirable flicker effect caused by the html templates display.
  *
  * The directive can be applied to the `<body>` element, but the preferred usage is to apply
  * multiple `ngCloak` directives to small portions of the page to permit progressive rendering
@@ -24483,7 +24483,7 @@ var ngClassEvenDirective = classDirective('Even', 1);
  *
  * When this css rule is loaded by the browser, all html elements (including their children) that
  * are tagged with the `ngCloak` directive are hidden. When Angular encounters this directive
- * during the compilation of the template it deletes the `ngCloak` element attribute, making
+ * during the compilation of the templates it deletes the `ngCloak` element attribute, making
  * the compiled element visible.
  *
  * For the best result, the `angular.js` script must be loaded in the head section of the html
@@ -24499,7 +24499,7 @@ var ngClassEvenDirective = classDirective('Even', 1);
         <div id="template2" class="ng-cloak">{{ 'world' }}</div>
      </file>
      <file name="protractor.js" type="protractor">
-       it('should remove the template directive and css class', function() {
+       it('should remove the templates directive and css class', function() {
          expect($('#template1').getAttribute('ng-cloak')).
            toBeNull();
          expect($('#template2').getAttribute('ng-cloak')).
@@ -24528,13 +24528,13 @@ var ngCloakDirective = ngDirective({
  *
  * * Model — Models are the properties of a scope; scopes are attached to the DOM where scope properties
  *   are accessed through bindings.
- * * View — The template (HTML with data bindings) that is rendered into the View.
+ * * View — The templates (HTML with data bindings) that is rendered into the View.
  * * Controller — The `ngController` directive specifies a Controller class; the class contains business
  *   logic behind the application to decorate the scope with functions and values
  *
  * Note that you can also attach controllers to the DOM by declaring it in a route definition
  * via the {@link ngRoute.$route $route} service. A common mistake is to declare the controller
- * again using `ng-controller` in the template itself.  This will cause the controller to be attached
+ * again using `ng-controller` in the templates itself.  This will cause the controller to be attached
  * and executed twice.
  *
  * @element ANY
@@ -24568,7 +24568,7 @@ var ngCloakDirective = ngDirective({
  * and in this guide. However, there are advantages to binding properties directly to the controller
  * and avoiding scope.
  *
- * * Using `controller as` makes it obvious which controller you are accessing in the template when
+ * * Using `controller as` makes it obvious which controller you are accessing in the templates when
  * multiple controllers apply to an element.
  * * If you are writing your controllers as classes you have easier access to the properties and
  * methods, which will appear on the scope, from inside the controller code.
@@ -25535,7 +25535,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
                 clone[clone.length++] = $compile.$$createComment('end ngIf', $attr.ngIf);
                 // Note: We only need the first/last node of the cloned nodes.
                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
-                // by a directive with templateUrl when its template arrives.
+                // by a directive with templateUrl when its templates arrives.
                 block = {
                   clone: clone
                 };
@@ -25572,7 +25572,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * @description
  * Fetches, compiles and includes an external HTML fragment.
  *
- * By default, the template URL is restricted to the same domain and protocol as the
+ * By default, the templates URL is restricted to the same domain and protocol as the
  * application document. This is done by calling {@link $sce#getTrustedResourceUrl
  * $sce.getTrustedResourceUrl} on it. To load templates from other domains or protocols
  * you may either {@link ng.$sceDelegateProvider#resourceUrlWhitelist whitelist them} or
@@ -25582,7 +25582,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * In addition, the browser's
  * [Same Origin Policy](https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
  * and [Cross-Origin Resource Sharing (CORS)](http://www.w3.org/TR/cors/)
- * policy may further restrict whether the template is successfully loaded.
+ * policy may further restrict whether the templates is successfully loaded.
  * For example, `ngInclude` won't work for cross-domain requests on all browsers and for `file://`
  * access on some browsers.
  *
@@ -25618,13 +25618,13 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
   <example module="includeExample" deps="angular-animate.js" animations="true">
     <file name="index.html">
      <div ng-controller="ExampleController">
-       <select ng-model="template" ng-options="t.name for t in templates">
+       <select ng-model="templates" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
-       url of the template: <code>{{template.url}}</code>
+       url of the templates: <code>{{templates.url}}</code>
        <hr/>
        <div class="slide-animate-container">
-         <div class="slide-animate" ng-include="template.url"></div>
+         <div class="slide-animate" ng-include="templates.url"></div>
        </div>
      </div>
     </file>
@@ -25634,7 +25634,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
           $scope.templates =
             [ { name: 'template1.html', url: 'template1.html'},
               { name: 'template2.html', url: 'template2.html'} ];
-          $scope.template = $scope.templates[0];
+          $scope.templates = $scope.templates[0];
         }]);
      </file>
     <file name="template1.html">
@@ -25683,7 +25683,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
       }
     </file>
     <file name="protractor.js" type="protractor">
-      var templateSelect = element(by.model('template'));
+      var templateSelect = element(by.model('templates'));
       var includeElem = element(by.css('[ng-include]'));
 
       it('should load template1.html', function() {
@@ -25744,7 +25744,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * @name ngInclude#$includeContentError
  * @eventType emit on the scope ngInclude was declared in
  * @description
- * Emitted when a template HTTP request yields an erroneous response (status < 200 || status > 299)
+ * Emitted when a templates HTTP request yields an erroneous response (status < 200 || status > 299)
  *
  * @param {Object} angularEvent Synthetic event object.
  * @param {String} src URL of content to load.
@@ -25795,7 +25795,7 @@ var ngIncludeDirective = ['$templateRequest', '$anchorScroll', '$animate',
           var thisChangeId = ++changeCounter;
 
           if (src) {
-            //set the 2nd param to true to ignore the template request error so that the inner
+            //set the 2nd param to true to ignore the templates request error so that the inner
             //contents and scope can be cleaned up.
             $templateRequest(src, true).then(function(response) {
               if (scope.$$destroyed) return;
@@ -25840,7 +25840,7 @@ var ngIncludeDirective = ['$templateRequest', '$anchorScroll', '$animate',
 }];
 
 // This directive is called during the $transclude call of the first `ngInclude` directive.
-// It will replace and compile the content of the element with the loaded template.
+// It will replace and compile the content of the element with the loaded templates.
 // We need this directive so that the element content is already filled when
 // the link function of another directive on the same element as ngInclude
 // is called.
@@ -28479,11 +28479,11 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * @multiElement
  *
  * @description
- * The `ngRepeat` directive instantiates a template once per item from a collection. Each template
+ * The `ngRepeat` directive instantiates a templates once per item from a collection. Each templates
  * instance gets its own scope, where the given loop variable is set to the current collection item,
  * and `$index` is set to the item index or key.
  *
- * Special properties are exposed on the local scope of each template instance, including:
+ * Special properties are exposed on the local scope of each templates instance, including:
  *
  * | Variable  | Type            | Details                                                                     |
  * |-----------|-----------------|-----------------------------------------------------------------------------|
@@ -28535,8 +28535,8 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * `ngRepeat` uses {@link $rootScope.Scope#$watchCollection $watchCollection} to detect changes in
  * the collection. When a change happens, ngRepeat then makes the corresponding changes to the DOM:
  *
- * * When an item is added, a new instance of the template is added to the DOM.
- * * When an item is removed, its template instance is removed from the DOM.
+ * * When an item is added, a new instance of the templates is added to the DOM.
+ * * When an item is removed, its templates instance is removed from the DOM.
  * * When items are reordered, their respective templates are reordered in the DOM.
  *
  * To minimize creation of DOM elements, `ngRepeat` uses a function
@@ -29010,7 +29010,7 @@ var ngRepeatDirective = ['$parse', '$animate', '$compile', function($parse, $ani
                 previousNode = endNode;
                 // Note: We only need the first/last node of the cloned nodes.
                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
-                // by a directive with templateUrl when its template arrives.
+                // by a directive with templateUrl when its templates arrives.
                 block.clone = clone;
                 nextBlockMap[block.id] = block;
                 updateScope(block.scope, index, valueIdentifier, value, keyIdentifier, key, collectionLength);
@@ -29424,12 +29424,12 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
  * @restrict EA
  *
  * @description
- * The `ngSwitch` directive is used to conditionally swap DOM structure on your template based on a scope expression.
+ * The `ngSwitch` directive is used to conditionally swap DOM structure on your templates based on a scope expression.
  * Elements within `ngSwitch` but without `ngSwitchWhen` or `ngSwitchDefault` directives will be preserved at the location
- * as specified in the template.
+ * as specified in the templates.
  *
- * The directive itself works similar to ngInclude, however, instead of downloading template code (or loading it
- * from the template cache), `ngSwitch` simply chooses one of the nested elements and makes it visible based on which element
+ * The directive itself works similar to ngInclude, however, instead of downloading templates code (or loading it
+ * from the templates cache), `ngSwitch` simply chooses one of the nested elements and makes it visible based on which element
  * matches the value obtained from the evaluated expression. In other words, you define a container element
  * (where you place the directive), place an expression on the **`on="..."` attribute**
  * (or the **`ng-switch="..."` attribute**), define any inner elements inside of the directive and place
@@ -29801,7 +29801,7 @@ var ngTranscludeDirective = ngDirective({
 
     if (!$transclude) {
       throw ngTranscludeMinErr('orphan',
-       'Illegal use of ngTransclude directive in the template! ' +
+       'Illegal use of ngTransclude directive in the templates! ' +
        'No parent directive that requires a transclusion found. ' +
        'Element: {0}',
        startingTag($element));
@@ -29821,28 +29821,28 @@ var ngTranscludeDirective = ngDirective({
  *
  * @description
  * Load the content of a `<script>` element into {@link ng.$templateCache `$templateCache`}, so that the
- * template can be used by {@link ng.directive:ngInclude `ngInclude`},
+ * templates can be used by {@link ng.directive:ngInclude `ngInclude`},
  * {@link ngRoute.directive:ngView `ngView`}, or {@link guide/directive directives}. The type of the
- * `<script>` element must be specified as `text/ng-template`, and a cache name for the template must be
+ * `<script>` element must be specified as `text/ng-templates`, and a cache name for the templates must be
  * assigned through the element's `id`, which can then be used as a directive's `templateUrl`.
  *
- * @param {string} type Must be set to `'text/ng-template'`.
- * @param {string} id Cache name of the template.
+ * @param {string} type Must be set to `'text/ng-templates'`.
+ * @param {string} id Cache name of the templates.
  *
  * @example
   <example>
     <file name="index.html">
-      <script type="text/ng-template" id="/tpl.html">
-        Content of the template.
+      <script type="text/ng-templates" id="/tpl.html">
+        Content of the templates.
       </script>
 
-      <a ng-click="currentTpl='/tpl.html'" id="tpl-link">Load inlined template</a>
+      <a ng-click="currentTpl='/tpl.html'" id="tpl-link">Load inlined templates</a>
       <div id="tpl-content" ng-include src="currentTpl"></div>
     </file>
     <file name="protractor.js" type="protractor">
-      it('should load template defined inside script tag', function() {
+      it('should load templates defined inside script tag', function() {
         element(by.css('#tpl-link')).click();
-        expect(element(by.css('#tpl-content')).getText()).toMatch(/Content of the template/);
+        expect(element(by.css('#tpl-content')).getText()).toMatch(/Content of the templates/);
       });
     </file>
   </example>
@@ -29852,7 +29852,7 @@ var scriptDirective = ['$templateCache', function($templateCache) {
     restrict: 'E',
     terminal: true,
     compile: function(element, attr) {
-      if (attr.type == 'text/ng-template') {
+      if (attr.type == 'text/ng-templates') {
         var templateUrl = attr.id,
             text = element[0].text;
 

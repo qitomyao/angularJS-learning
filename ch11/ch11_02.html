@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ch11_02</title>
+</head>
+<body>
+<script>
+  // 定义一个对象
+  function AppLog() {
+    this.startInfo = function(){
+      console.info("=========应用开始启动=========");
+      console.error("=========应用启动错误=========");
+      console.info("=========应用关闭，请检查错误=========");
+    }
+  }
+  // 创建一个全局变量
+  var appLog = new AppLog();
+  // 在构造方法中查找并使用AppLog对象
+  function App(){
+    this.start = function(){
+      appLog.startInfo();
+    }
+  }
+  var app =new App();
+  app.start();
+</script>
+</body>
+</html>
+

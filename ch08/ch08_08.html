@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="directiveModule">
+<head>
+  <meta charset="UTF-8">
+  <title>ch08_08</title>
+  <script src="../angular.js"></script>
+
+</head>
+<body>
+<!--自定义指令repeat-->
+<div repeat="5">
+  <div><h3>hello world!</h3></div>
+</div>
+<script>
+  var app = angular.module("directiveModule",[]);
+  app.directive("repeat",function(){
+    return {
+      restrict:'A',
+      replace:true,
+      /*
+        tElem: 指令所在的元素
+        tAttrs: 指令元素的所有属性列表
+       */
+      compile: function(tElem, tAttrs){
+        console.log("compile...=>" +  tElem.html());
+        var temp = tElem.html(); //获取html元素的内容
+        for(var i=0;i<tAttrs.repeat-1;i++) {
+          tElem.append(temp); //将获取到的内容(<h3>hello world!</h3>)重复添加进<div>
+        }
+        console.log("post compile...");
+      }
+    }
+  });
+</script>
+</body>
+</html>
+

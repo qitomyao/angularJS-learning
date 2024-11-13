@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>ch09_04</title>
+  <script src="/angular-1.5.5/angular.js"></script>
+</head>
+<body>
+<div ng-controller="MainController">
+
+</div>
+<script>
+  var app = angular.module('app',[]);
+  /*
+      在使用Provider之前我们可以调用模块实例的config()方法对Provider进行配置
+      可以通过模块实例的provider()方法创建自定义Provider
+      第一个参数：自定义Provider名称
+      第二个参数：Provider对象的构造方法，构造方法有两部分组成
+          第一部分: 普通的成员属性和方法，这些成员属性和方法可以在模块实例的config()方法中访问，可以在Provider对象注入其他组件之前对成员属性进行配置
+          第二部分: 由$get()成员方法返回，而且Provider构造方法必须有一个$get()成员方法，走则会抛出异常。$get()成员方法返回内容可以在注入该Provider对象的控制器或其他组件中访问。
+   */
+  app.provider("custom",function(){
+    this.name = "Smith";
+    this.getName = function(){
+      return name;
+    }
+    this.$get = function(){
+      var name = this.name;
+      return  function(){
+        alert("Hello " + name);
+      }
+    }
+  });
+  //在注入config()方法时需要在Provider对象名称后追加"Provider"
+  app.config(function(customProvider){
+    customProvider.name = "Jane";
+  });
+  app.controller("MainController",function(custom){
+    custom();
+  });
+
+  /*
+      执行顺序：
+      1. 开启AngularJS应用
+      2. 定义app模块
+      3. 定义custom Provider对象，该对象有name属性和getName方法
+         $get方法，会返回一个函数，当注入custom是会调用该方法中的内容
+      4. 配置Provider
+         config函数通过注入customProvider来访问Provider的普通属性
+         将customProvider.name属性的值从"Smith"修改为"Jane"
+      5. 定义控制器并调用Provider
+         定义一个名为MainController的控制器，并在其中注入了custom(此时为$get()返回的函数)
+         执行custom()时，会弹出一个对话框显示Hello Jane。
+   */
+</script>
+</body>
+</html>
+

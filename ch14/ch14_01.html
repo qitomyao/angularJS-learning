@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>ch14_01</title>
+    <script src="/angular-1.5.5/angular.js"></script>
+</head>
+<body>
+<div ng-controller="MainController">
+    <div>结果：{{result}}</div>
+    <div>执行时间：{{totalTime}}</div>
+    <div>{{failure}}</div>
+</div>
+<script>
+    var app = angular.module("app", []);
+    //$q用于创建和处理异步任务
+    app.controller("MainController", function($scope,$q) {
+        //模拟一个异步加法操作
+        function add(x,y){
+            var q = $q.defer(); //创建一个deferred对象q，用于控制异步操作的完成(resolve)或失败(reject)
+            //模拟延迟300毫秒的操作
+            setTimeout(function() {
+                var result = x + y;
+                if(result >= 0) {
+                    q.resolve(result); //将结果返回
+                } else {
+                    q.reject('negatvie value:' + result); //将失败信息返回
+                }
+            },300);
+            return q.promise; //返回一个Promise对象，以便异步链式处理
+        }
+
+        //开始执行异步操作
+        var startTime = Date.now(); //记录当前时间
+        var promise = add(20,30); //返回一个promise对象
+        promise.then(function(result){ //如果第一个add成功，将结果传递给第二个add，返回新的promise
+            return add(result,40);
+        }).then(function(result){
+            $scope.result = result; //操作成功，将结果复制给result
+        }).catch(function(failure){
+            $scope.failure = failure; //如果失败，将错误信息复制给failure
+        }).finally(function(){
+            $scope.totalTime = Date.now() - startTime; //无论promise成功或失败，计算并赋值总执行时间到totalTime
+        });
+    });
+</script>
+</body>
+</html>
+
+

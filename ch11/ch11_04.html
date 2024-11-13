@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ch11_04</title>
+</head>
+<body>
+<script>
+  function Dog() {
+    this.cry = function(){
+      console.log("Wang Wang...");
+    }
+  }
+  function Cat(){
+    this.cry = function() {
+      console.log("Miao Miao...");
+    }
+  }
+  //这个container假设成一个IOC容器，该容器中存放这已经被实例化的对象
+  var container = {"dog":new Dog(),"cat":new Cat()};
+
+  function Family(dog, cat) {
+    this.feed = function() {
+      dog.cry();
+      cat.cry();
+    }
+    this.dog = dog;
+    this.cat = cat;
+  }
+  /*
+      这个方法接收一个function类型变量，然后调用该参数的toString()方法获取func方法的源码字符串，然后调用字符串对象的match()方法获取参数子串，
+      接着将子串拆分成一个字符串数组，每个元素即为参数名称。
+   */
+  function getParams(func) {
+    var args = func.toString().match(/^function\s*[^\(]*\(\s*([^\)]*)\)/m);
+    if (args && args.length > 1) {
+      return args[1].replace(/\s*/g, '').split(',');
+    }
+    return [];
+  };
+  var args = getParams(Family); //获取到了参数名称
+  console.log("Family Param=>" + args);
+  var depends = [];
+  //将名字匹配的对象从容器中取出，放入depends数组
+  for (var i in args) {
+    depends[i] = container[args[i]];
+  }
+  console.log("Dependency Object=>" + depends);
+  var family = {};
+  /*
+    Function对象的apply()方法
+    调用apply()方法使用特定的参数来构造JavaScript对象，这里使用Family构造方法所依赖的对象构造family实例，这样就实现了依赖注入
+    这里使用Family构造函数创建一个Family实例，然后用depends里的具体实例对参数dog和cat注入
+   */
+  Family.apply(family, depends);
+  console.log("Family Object=>" + family);
+  console.log("属性名:"+Object.keys(family)); //这里有3个属性: feed, dog, cat
+  family.feed();
+</script>
+</body>
+</html>

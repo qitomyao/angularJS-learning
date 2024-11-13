@@ -1,0 +1,45 @@
+<!doctype html>
+<html ng-app="appMod">
+<head>
+  <meta charset="UTF-8">
+  <title>ch11_08</title>
+  <script src="/angular-1.5.5/angular.js"></script>
+</head>
+<body ng-controller="MainController">
+<script>
+  var appMod = angular.module("appMod",[]);
+  appMod.service("helloService",function($http){
+    this.sayHello = function(){
+      alert("Hello,Welcome to you!");
+    }
+  });
+  /*
+    $injector服务实际上就是一个IoC容器，当我们创建一个新的可注入类型，例如Service、Factory等，这些可注入类型会注册到IoC容器中，AngularJS通过$injector服务对这些可
+    注入类型进行集中管理，这也就意味着我们可以通过$injector服务获取所有的可注入类型。
+    $injector服务提供了一个get()方法，用于IoC容器中获取可注入对象，使用方法$injector.get("serviceName")，参数可注入对象名称。
+    通过$injector.get("helloService")获取helloService服务，接着调用该服务的sayHello方法
+  */
+  /*
+   appMod.controller("MainController",function($injector){
+       var helloService = $injector.get("helloService");
+       helloService.sayHello();
+   });
+  */
+  // 除了可以使用依赖注入将$injector服务注入控制器中外, AngularJS还提供了一个全局的injector()方法用来获取$injector服务
+  /*
+  appMod.controller("MainController",function(){
+      var $injector =  angular.injector(['ng','appMod']);
+      var helloService = $injector.get("helloService");
+      helloService.sayHello();
+  });
+  */
+  //如果想知道某个方法依赖于哪些服务，就可以调用$injector服务的annotate()方法获取
+  appMod.controller("MainController",function($injector){
+    var depends = $injector.annotate(function($http,$scope){});
+    console.log(depends);
+  });
+</script>
+</body>
+</html>
+
+

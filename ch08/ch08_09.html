@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app="directiveModule">
+<head>
+  <meta charset="UTF-8">
+  <title>ch08_09</title>
+  <script src="../angular.js"></script>
+
+</head>
+<body>
+<div ng-controller="MainController">
+  用户名：<input type="text" ng-model="name"/>
+<!--  将指令属性name-attr与控制器作用域中的name属性绑定-->
+  <say-hello name-attr="{{name}}"></say-hello>
+</div>
+<script>
+  var app = angular.module("directiveModule",[]);
+  app.controller("MainController",function($scope){
+    $scope.name = "Smith";
+  });
+  app.directive("sayHello",function(){
+    return {
+      restrict:'E',
+      scope:{name:'@nameAttr'}, //使用@符号建立基于属性的绑定
+      template:"<h3>hello,{{name}}</h3>"
+    }
+  });
+</script>
+</body>
+</html>
+
+

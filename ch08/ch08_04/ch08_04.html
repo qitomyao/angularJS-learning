@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="directiveModule">
+<head>
+  <meta charset="UTF-8">
+  <title>ch08_04</title>
+  <script src="../../angular.js"></script>
+</head>
+<body>
+  <!--指令位置，对于驼峰指令命名方式: hello-world; hello:world; html5规范: x-hello-world; data-hello-world;-->
+  <div hello-world></div>
+  <script>
+    var app = angular.module("directiveModule",[]);
+    /*
+        directive方法用来实现自定义指令
+        第一个参数：指令名称，采用驼峰命名
+        第二个参数：返回一个对象（称为指令定义对象DDO），用于描述指令的特征及指令对应的处理逻辑，还可以想指令定义方法中注一些依赖，例如$http、$rootScope
+
+
+     */
+    app.directive("helloWorld",function(){
+      return {
+        /*
+          E: 元素
+          A: 属性
+          C: 样式
+          M: 注释
+         */
+        restrict:'AEC', //这里表示指令可以同时作为HTML元素、属性、CSS样式使用
+        // 该属性用于指定是否使用template属性定义的HTML模版内容替换指令所在的HTML元素
+        replace:true,
+        templateUrl:'helloworld.html'
+      }
+    });
+  </script>
+</body>
+</html>
+

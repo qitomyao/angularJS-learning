@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>ch07_02</title>
+  <script src="../angular-1.5.5/angular.js"></script>
+  <style>
+    input.ng-invalid {
+      border: #f00 1px solid;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <form name="user">
+    <div>
+<!--      required验证表单是否填写，需要点击提交按钮触发-->
+      <label>Required:</label><input type="text" name="text" required/><br>
+<!--      需要使用ng-model来跟踪输入的状态，ng-minlength设置最小长度-->
+      <label>MinLength:</label><input type="text" name="minLength" ng-model="minLength" ng-minlength="5"/> <span ng-show="user.minLength.$invalid">长度过小</span><br>
+<!--      需要使用ng-model来跟踪输入的状态，ng-maxlength设置最大长度-->
+      <label>MaxLength:</label><input type="text" name="maxlength" ng-model="maxlength" ng-maxlength="15"/> <span ng-show="user.maxlength.$invalid">长度过大</span><br>
+<!--      type="email"就可以用于验证邮件地址-->
+      <label>Email:</label><input type="email" name="email" ng-model="email"/> <span ng-show="user.email.$invalid">内容输入不合法</span><br>
+<!--      匹配指定的正则表达式-->
+      <label>正则表达式:</label><input type="text" name="pattern" ng-pattern="[a-zA-Z]"/> <span ng-show="user.pattern.$invalid">内容输入不合法</span><br>
+<!--      type="number"就可以用于验证数字-->
+      <label>数字:</label><input type="number" name="age" ng-model="age"/> <span ng-show="user.age.$invalid">不是数字</span><br>
+<!--      type="url"就可以验证URL-->
+      <label>数字:</label><input type="url" name="homepage" ng-model="url"/> <span ng-show="user.homepage.$invalid">不是URL</span><br>
+      <button type="submit">submit</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
+
+
+
